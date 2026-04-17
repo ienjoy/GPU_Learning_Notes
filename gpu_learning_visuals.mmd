@@ -1,0 +1,30 @@
+flowchart TD
+    A[服务目标] --> B[指标层]
+    B --> B1[TTFT]
+    B --> B2[TPOT]
+    B --> B3[Throughput]
+    B --> B4[Goodput]
+
+    A --> C[系统层]
+    C --> C1[Prefill/Decode 拆分]
+    C --> C2[调度与批处理]
+    C --> C3[预分配与预编译]
+
+    A --> D[算子层]
+    D --> D1[GEMM]
+    D --> D2[MLA Decode]
+    D --> D3[MoE]
+
+    D1 --> E1[融合量化减少内存往返]
+    D2 --> E2[减少每次调用元数据与launch]
+    D3 --> E3[降低路由与重排开销]
+
+    C --> F[硬件映射]
+    F --> F1[Chiplet/XCD aware]
+    F --> F2[缓存与带宽利用]
+
+    E1 --> G[性能收益]
+    E2 --> G
+    E3 --> G
+    F1 --> G
+    F2 --> G

@@ -1,0 +1,84 @@
+%% ======================================================
+%% GPU 学习专题可视化图集（共 5 张）
+%% 使用说明：每张图独立粘贴到 Mermaid 渲染工具查看
+%% 推荐工具：VS Code Mermaid Preview / mermaid.live
+%% ======================================================
+
+
+%% ============================
+%% 图1：推理服务指标 TTFT / TPOT / Goodput
+%% ============================
+%%{
+%%  config: { "theme": "default" }
+%%}%%
+%% flowchart TD
+%%     subgraph 服务指标
+%%         A[用户发送请求] --> B[等待第一个Token]
+%%         B --> C[TTFT 首Token延迟]
+%%         C --> D[持续生成Token]
+%%         D --> E[TPOT 每Token延迟]
+%%         E --> F[请求完成]
+%%     end
+%%     subgraph 系统目标
+%%         G[低延迟] -.- |天然冲突| H[高吞吐]
+%%     end
+%%     subgraph Goodput
+%%         I[SLA约束内最大有效吞吐]
+%%     end
+%%     G --> I
+%%     H --> I
+
+
+%% ============================
+%% 图2：LLM 并行策略全景
+%% ============================
+%% flowchart LR
+%%     subgraph DP[数据并行]
+%%         dp1[Replica1完整模型] & dp2[Replica2完整模型]
+%%     end
+%%     subgraph TP[张量并行]
+%%         tp1[GPU1矩阵前半] --- tp2[GPU2矩阵后半]
+%%     end
+%%     subgraph PP[流水线并行]
+%%         pp1[GPU1 Layer1-8] --> pp2[GPU2 Layer9-16] --> pp3[GPU3 Layer17-24]
+%%     end
+%%     subgraph EP[专家并行]
+%%         ep1[GPU1 Expert1-4] & ep2[GPU2 Expert5-8]
+%%     end
+%%     A[选策略] --> DP & TP & PP & EP
+
+
+%% ============================
+%% 图3：AMD Kernel 竞赛优化三层框架
+%% ============================
+%% flowchart TD
+%%     A1[算子层] --> B1[融合量化进主循环] & B2[硬件FP4指令]
+%%     A2[运行时层] --> C1[预分配中间缓冲] & C2[shape-specific配置]
+%%     A3[环境层] --> D1[预编译避免JIT超时] & D2[使用最新AITER]
+%%     B1 & B2 & C1 & D1 --> E[性能收益]
+
+
+%% ============================
+%% 图4：GPU 内存层级与优化方向
+%% ============================
+%% flowchart TD
+%%     R[Registers 超快极少] --> SM[Shared Memory 很快48-160KB]
+%%     SM --> L1[L1 Cache 快几十KB]
+%%     L1 --> L2[L2 Cache 中几MB]
+%%     L2 --> HBM[HBM全局内存 慢几十GB]
+%%     HBM -. 瓶颈在这里 .-> K1[搬数据到SharedMem]
+%%     K1 --> K4[提速10-100x]
+%%     HBM -. 减少重复读 .-> K2[Fusion]
+%%     K2 --> K4
+
+
+%% ============================
+%% 图5：实战优化复盘循环
+%% ============================
+%% flowchart LR
+%%     A[遇到性能问题] --> B{profiler定位}
+%%     B --> C[计算受限] --> E1[提Occupancy] & E2[用TensorCore]
+%%     B --> D[内存受限] --> F1[Fusion/Tiling] & F2[Coalescing]
+%%     E1 & E2 & F1 & F2 --> G[量化收益TTFT/TPOT]
+%%     G --> H[确认副作用]
+%%     H --> A

@@ -1,0 +1,10 @@
+GPU 学习执行清单（可打勾）
+
+[ ] 我能解释 TTFT 和 TPOT 的区别
+[ ] 我能解释为什么 prefill/decode 要分开考虑
+[ ] 我能说出 DP/TP/PP/EP/CP 的核心取舍
+[ ] 我能看懂一次 kernel profiling 的热点
+[ ] 我能判断某个优化是算子收益还是系统收益
+[ ] 我能记录一次优化前后的指标变化
+[ ] 我能复述 GEMM/MLA/MoE 三个案例中的关键技巧
+[ ] 我能在服务端验证优化，而不是只看 microbench
