@@ -3,6 +3,8 @@
 > 来源：[@levidiamode](https://x.com/levidiamode/status/2007167991075713262) — 365天GPU编程挑战 Day 2
 
 ![CUDA 线程索引可视化](img/gridblockthread_fixed.png)
+
+![CUDA thread hierarchy](img/cuda_thread_hierarchy.png)
 ---
 
 ## 图中结构

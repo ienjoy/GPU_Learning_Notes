@@ -1,3 +1,5 @@
 pplx-garden/
 .venv/
 .DS_Store
+video/
+*.mp4
